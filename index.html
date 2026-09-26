@@ -12,29 +12,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* ================= CSS ================= */
         :root {
             --black: #0a0a0a;
-            --pink: #ff1493;
-            --light-pink: #ffb7c5;
+            --pink: #ff69b4;
             --gold: #d4af37;
             --red: #dc143c;
+            --deep-purple: #3b0b3b;
             --cream: #f5f0e6;
-            --deep-purple: #4b0082;
-            --dark-purple: #2e003e;
             --text-light: #e0e0e0;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #2e003e 50%, #4b0082 100%);
-            background-attachment: fixed;
+            background-color: var(--black);
             color: var(--text-light);
             overflow-x: hidden;
             position: relative;
@@ -43,19 +34,15 @@
 
         /* Cherry Blossom Animation */
         #cherry-blossom-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
         .cherry-blossom {
             position: absolute;
-            background: radial-gradient(circle, #ffb7c5, #ff1493);
+            background: radial-gradient(circle, #ffb7c5, #ff69b4);
             border-radius: 50% 0 50% 0;
-            opacity: 0.8;
+            opacity: 0.7;
             animation: fall linear infinite;
-            filter: drop-shadow(0 0 5px var(--pink));
         }
         @keyframes fall {
             0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
@@ -64,470 +51,209 @@
 
         /* Corner Lights */
         .corner-light {
-            position: fixed;
-            width: 180px; height: 180px;
-            border-radius: 50%;
-            z-index: 1;
-            animation: pulse 4s infinite alternate;
+            position: fixed; width: 150px; height: 150px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.5) 0%, transparent 70%);
+            z-index: 1; animation: pulse 4s infinite alternate;
         }
-        .top-left { 
-            top: -60px; left: -60px; 
-            background: radial-gradient(circle, rgba(255, 20, 147, 0.6) 0%, transparent 70%);
-        }
-        .top-right { 
-            top: -60px; right: -60px; 
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.6) 0%, transparent 70%);
-        }
-        .bottom-left { 
-            bottom: -60px; left: -60px; 
-            background: radial-gradient(circle, rgba(220, 20, 60, 0.6) 0%, transparent 70%);
-        }
-        .bottom-right { 
-            bottom: -60px; right: -60px; 
-            background: radial-gradient(circle, rgba(75, 0, 130, 0.8) 0%, transparent 70%);
-        }
+        .top-left { top: -50px; left: -50px; }
+        .top-right { top: -50px; right: -50px; }
+        .bottom-left { bottom: -50px; left: -50px; }
+        .bottom-right { bottom: -50px; right: -50px; }
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.5); opacity: 0.9; }
+            100% { transform: scale(1.5); opacity: 0.8; }
         }
 
-        /* ====== LOGIN SCREEN ====== */
+        /* LOGIN SCREEN */
         #loginOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.5s ease;
         }
         .login-box {
-            background: linear-gradient(135deg, rgba(46, 0, 62, 0.95), rgba(75, 0, 130, 0.95));
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(255, 20, 147, 0.5), 0 0 30px rgba(212, 175, 55, 0.3);
+            background: rgba(20, 20, 20, 0.9); border: 2px solid var(--pink);
+            border-radius: 20px; padding: 40px; width: 90%; max-width: 420px;
+            text-align: center; box-shadow: 0 0 40px rgba(255, 105, 180, 0.4);
             animation: float 4s ease-in-out infinite;
         }
         .login-box h1 {
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 10px;
-            font-size: 2rem;
-            background: linear-gradient(90deg, var(--pink), var(--gold), var(--red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Playfair Display', serif; color: var(--gold);
+            margin-bottom: 10px; font-size: 2rem;
         }
         .login-box h1 span { 
-            background: linear-gradient(90deg, var(--gold), var(--pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--pink); 
+            text-shadow: 0 0 10px var(--red);
         }
-        .login-box p.subtitle {
-            color: #ccc;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
+        .login-box p.subtitle { color: #aaa; margin-bottom: 25px; font-size: 0.9rem; }
         .login-box input {
-            width: 100%;
-            padding: 14px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px;
+            border: 1px solid #444; background: #1a1a1a; color: white;
+            font-size: 1rem; outline: none; transition: 0.3s;
         }
         .login-box input:focus {
-            border-color: var(--pink);
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.6);
+            border-color: var(--pink); box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
         }
         .login-box button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            background: linear-gradient(90deg, var(--pink), var(--gold));
-            color: var(--dark-purple);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .login-box button:hover {
-            background: linear-gradient(90deg, var(--red), var(--pink));
+            width: 100%; padding: 14px; margin-top: 15px; font-size: 1.1rem;
+            font-weight: 600; background: linear-gradient(45deg, var(--pink), var(--red)); 
             color: white;
-            box-shadow: 0 0 25px var(--pink);
-            transform: translateY(-2px);
+            border: none; border-radius: 10px; cursor: pointer; transition: 0.3s;
         }
-        .toggle-link {
-            margin-top: 20px;
-            color: #aaa;
-            font-size: 0.9rem;
+        .login-box button:hover { 
+            background: linear-gradient(45deg, var(--red), var(--pink));
+            box-shadow: 0 0 20px var(--pink); 
         }
+        .toggle-link { margin-top: 20px; color: #aaa; font-size: 0.9rem; }
         .toggle-link span {
-            color: var(--gold);
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: underline;
+            color: var(--pink); cursor: pointer; font-weight: 600; text-decoration: underline;
         }
-        .toggle-link span:hover { color: var(--pink); }
-        #loginMessage {
-            margin-top: 15px;
-            font-weight: bold;
-            min-height: 20px;
-        }
+        #loginMessage { margin-top: 15px; font-weight: bold; min-height: 20px; }
 
-        /* ====== MAIN WEBSITE ====== */
-        #mainWebsite {
-            display: none;
-            position: relative;
-            z-index: 2;
-        }
+        /* MAIN WEBSITE */
+        #mainWebsite { display: none; position: relative; z-index: 2; }
 
-        /* Header */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            background: rgba(10, 10, 10, 0.9);
-            border-bottom: 2px solid transparent;
-            border-image: linear-gradient(90deg, var(--pink), var(--gold), var(--red), var(--deep-purple)) 1;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(10, 10, 10, 0.9);
+            border-bottom: 2px solid var(--pink); position: sticky; top: 0;
+            z-index: 100; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 10px;
         }
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            background: linear-gradient(90deg, var(--pink), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.8rem; 
+            color: var(--gold); 
         }
         .logo span { 
-            background: linear-gradient(90deg, var(--gold), var(--red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--pink); 
+            text-shadow: 0 0 8px var(--red); 
         }
 
         .search-bar {
-            display: flex;
-            align-items: center;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--gold);
-            border-radius: 25px;
-            padding: 5px 15px;
-            flex: 1;
-            max-width: 400px;
-            transition: 0.3s;
-        }
-        .search-bar:focus-within {
-            border-color: var(--pink);
-            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+            display: flex; align-items: center; background: rgba(255,255,255,0.1);
+            border: 1px solid var(--pink); border-radius: 25px; padding: 5px 15px;
+            flex: 1; max-width: 400px;
         }
         .search-bar input {
-            background: transparent;
-            border: none;
-            color: white;
-            outline: none;
-            width: 100%;
-            padding: 5px;
+            background: transparent; border: none; color: white; outline: none;
+            width: 100%; padding: 5px;
         }
-        .search-bar i { color: var(--gold); }
+        .search-bar i { color: var(--pink); }
 
         .auth-buttons { display: flex; gap: 10px; }
         .btn-gold {
-            background: linear-gradient(90deg, var(--gold), var(--pink));
-            color: var(--dark-purple);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--gold); color: var(--black); border: none;
+            padding: 10px 20px; border-radius: 25px; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
         }
-        .btn-gold:hover { 
-            background: linear-gradient(90deg, var(--pink), var(--red));
-            color: white;
-            box-shadow: 0 0 20px var(--pink);
-            transform: translateY(-2px);
-        }
+        .btn-gold:hover { background: #b8960c; box-shadow: 0 0 15px var(--gold); }
 
-        .btn-purple {
-            background: linear-gradient(90deg, var(--deep-purple), var(--red));
-            color: white;
-            border: 1px solid var(--gold);
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-purple:hover { 
-            background: linear-gradient(90deg, var(--red), var(--deep-purple));
-            box-shadow: 0 0 20px var(--deep-purple);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
+        /* HERO SECTION */
         .hero {
-            padding: 50px 5%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            position: relative;
-            z-index: 2;
+            padding: 80px 5%; display: flex; justify-content: center;
+            align-items: center; min-height: 70vh; position: relative; z-index: 2;
         }
         .hero-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
+            flex-wrap: wrap; text-align: center;
         }
-        .hero-image-wrapper {
-            position: relative;
-            width: 350px;
-            height: 450px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 40px rgba(255, 20, 147, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
-            animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        .hero-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(110%) saturate(120%);
-        }
-        .hero-image-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(180deg, transparent 50%, rgba(46, 0, 62, 0.9));
-        }
-        .hero-text { max-width: 500px; }
+        .hero-text { max-width: 800px; }
         .hero-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: var(--cream);
+            font-family: 'Playfair Display', serif; font-size: 3.5rem;
+            line-height: 1.2; margin-bottom: 20px;
         }
         .gradient-text {
             background: linear-gradient(45deg, var(--pink), var(--gold), var(--red), var(--deep-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 300% 300%;
-            animation: gradientMove 3s infinite alternate;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% 200%; animation: gradientMove 3s infinite alternate;
         }
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
         }
-        .hero-text p { font-size: 1.1rem; margin-bottom: 20px; color: #ddd; }
-        .developer-credit {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--gold);
-        }
-        #developerName {
-            animation: colorChange 2s infinite alternate;
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
+        .hero-text p { font-size: 1.2rem; margin-bottom: 20px; color: #ccc; }
+        .developer-credit { font-size: 1.2rem; font-weight: bold; color: var(--gold); }
+        #developerName { animation: colorChange 2s infinite alternate; }
         @keyframes colorChange {
-            0% { color: var(--pink); text-shadow: 0 0 10px var(--pink); }
-            25% { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
-            50% { color: var(--red); text-shadow: 0 0 10px var(--red); }
-            75% { color: var(--deep-purple); text-shadow: 0 0 10px var(--deep-purple); }
-            100% { color: var(--pink); text-shadow: 0 0 10px var(--pink); }
+            0% { color: var(--pink); text-shadow: 0 0 10px var(--red); }
+            100% { color: var(--gold); text-shadow: 0 0 10px var(--deep-purple); }
         }
 
-        .contact-links { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .contact-links { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center; }
         .contact-btn {
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            padding: 10px 20px; border-radius: 25px; text-decoration: none;
+            color: white; font-weight: 600; display: flex; align-items: center;
+            gap: 8px; transition: 0.3s;
         }
         .fb { background: #1877f2; }
         .wa { background: #25d366; }
         .li { background: #0077b5; }
-        .contact-btn:hover { 
-            transform: scale(1.08) translateY(-3px); 
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); 
-        }
+        .contact-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
 
-        /* Products Section */
-        .products-section {
-            padding: 50px 5%;
-            position: relative;
-            z-index: 2;
-        }
+        /* PRODUCTS */
+        .products-section { padding: 50px 5%; position: relative; z-index: 2; }
         .products-section h2 {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            text-align: center; font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; 
+            background: linear-gradient(45deg, var(--pink), var(--gold), var(--red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 40px;
-            background: linear-gradient(90deg, var(--pink), var(--gold), var(--red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
         }
         .product-card {
-            background: rgba(46, 0, 62, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 15px; padding: 15px; text-align: center;
+            transition: 0.3s; backdrop-filter: blur(5px);
         }
         .product-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--pink);
-            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+            transform: translateY(-10px); border-color: var(--pink);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
         }
         .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 100%; height: 200px; object-fit: cover;
+            border-radius: 10px; margin-bottom: 15px;
         }
         .product-card h3 { font-size: 1rem; color: var(--cream); margin-bottom: 5px; }
-        .product-card .price { 
-            font-weight: bold; 
-            font-size: 1.2rem; 
-            background: linear-gradient(90deg, var(--gold), var(--pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .product-card .price { color: var(--gold); font-weight: bold; font-size: 1.2rem; }
         .product-card .buy-btn {
-            margin-top: 10px;
-            background: linear-gradient(90deg, var(--deep-purple), var(--red));
+            margin-top: 10px; 
+            background: linear-gradient(45deg, var(--deep-purple), var(--red));
             color: white;
-            border: 1px solid var(--gold);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: 600;
+            border: 1px solid var(--pink); padding: 8px 15px;
+            border-radius: 20px; cursor: pointer; transition: 0.3s;
         }
         .product-card .buy-btn:hover { 
-            background: linear-gradient(90deg, var(--pink), var(--gold));
-            color: var(--dark-purple);
-            box-shadow: 0 0 20px var(--gold);
+            background: linear-gradient(45deg, var(--pink), var(--gold)); 
+            color: black; 
         }
 
-        /* Admin Panel */
-        .admin-container { 
-            padding: 50px 5%; 
-            display: none; 
-            position: relative; 
-            z-index: 2; 
-            min-height: 100vh;
-        }
-        .admin-box { 
-            background: rgba(46, 0, 62, 0.7); 
-            border: 2px solid var(--gold); 
-            padding: 25px; 
-            border-radius: 15px; 
-            margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(255, 20, 147, 0.3);
-        }
-        .admin-box h2 { 
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--pink), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Playfair Display', serif;
-        }
-        table { width: 100%; border-collapse: collapse; color: white; }
-        th, td { padding: 12px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); text-align: left; }
-        th { 
-            background: linear-gradient(90deg, var(--deep-purple), var(--red)); 
-            color: var(--gold); 
-            font-weight: 600;
-        }
-        tr:hover { background: rgba(255, 20, 147, 0.15); }
-        .intruder-img { 
-            width: 120px; 
-            height: 90px; 
-            object-fit: cover; 
-            border: 2px solid var(--red); 
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(220, 20, 60, 0.5);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             header { flex-direction: column; align-items: stretch; }
             .search-bar { max-width: 100%; }
-            .hero-content { flex-direction: column; text-align: center; }
-            .hero-image-wrapper { width: 280px; height: 350px; }
-            .hero-text h1 { font-size: 2rem; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .hero-text p { font-size: 1rem; }
             .contact-links { justify-content: center; }
-            .product-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-            .product-card img { height: 150px; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
             .login-box { padding: 30px 20px; }
-            .admin-box { padding: 15px; overflow-x: auto; }
-            table { font-size: 0.85rem; }
-            th, td { padding: 8px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cherry Blossom Animation -->
     <div id="cherry-blossom-container"></div>
     <div class="corner-light top-left"></div>
     <div class="corner-light top-right"></div>
     <div class="corner-light bottom-left"></div>
     <div class="corner-light bottom-right"></div>
 
-    <!-- ================= LOGIN OVERLAY ================= -->
+    <!-- LOGIN OVERLAY -->
     <div id="loginOverlay">
         <div class="login-box">
-            <h1>MOURY<span> Beauty</span></h1>
+            <h1>MOURY <span>Beauty</span></h1>
             <p class="subtitle">Please sign in to access the store</p>
             <form id="loginForm">
                 <input type="text" id="loginName" placeholder="Full Name (only for Sign Up)" style="display: none;">
@@ -542,7 +268,7 @@
         </div>
     </div>
 
-    <!-- ================= MAIN WEBSITE ================= -->
+    <!-- MAIN WEBSITE -->
     <div id="mainWebsite">
         <header>
             <div class="logo">MOURY <span>Beauty</span></div>
@@ -552,25 +278,20 @@
             </div>
             <div class="auth-buttons">
                 <button id="logoutBtn" class="btn-gold">Logout</button>
-                <button id="adminPanelLink" class="btn-purple" onclick="showAdmin()">Admin Panel</button>
             </div>
         </header>
 
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-image-wrapper">
-                    <!-- ✅ আপনার ছবি এখানে (ফাইলের নাম: moury.jpg) -->
-                    <img src="moury.jpg" alt="Moury" class="hero-img">
-                    <div class="hero-image-overlay"></div>
-                </div>
                 <div class="hero-text">
                     <h1>Welcome to <br><span class="gradient-text">MOURY Beauty Product</span></h1>
                     <p>Premium Cosmetics for the Modern You.</p>
-                    <p class="developer-credit">Developer by <span id="developerName">"MOURY"</span></p>
+                    <p class="developer-credit">Developer by <span id="developerName">MOURY</span></p>
+                    <!-- ✅ নতুন সোশ্যাল মিডিয়া লিংক -->
                     <div class="contact-links">
-                        <a href="https://www.facebook.com/share/1GcxiGM3xy/" target="_blank" class="contact-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="https://www.facebook.com/moury.sultana.75" target="_blank" class="contact-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
                         <a href="https://wa.me/8801319818928" target="_blank" class="contact-btn wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="https://www.linkedin.com/in/moury-sultana-08104042a" target="_blank" class="contact-btn li"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/moury-sultana-08104042a?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="contact-btn li"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
                     </div>
                 </div>
             </div>
@@ -582,34 +303,12 @@
         </section>
     </div>
 
-    <!-- ================= ADMIN PANEL ================= -->
-    <div id="adminPanel" class="admin-container">
-        <button class="btn-gold" onclick="showWebsite()" style="margin-bottom: 20px;">← Back to Website</button>
-        <h1 style="margin-bottom: 30px; background: linear-gradient(90deg, var(--pink), var(--gold), var(--red)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Playfair Display', serif;">Admin Dashboard</h1>
-        
-        <div class="admin-box">
-            <h2>Registered Users (Signups)</h2>
-            <table id="usersTable">
-                <thead>
-                    <tr><th>Name</th><th>Email</th><th>Password</th><th>Time</th></tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="admin-box">
-            <h2>Intruder Captures (Wrong Password)</h2>
-            <div id="intruderGallery" style="display: flex; gap: 15px; flex-wrap: wrap;"></div>
-        </div>
-    </div>
-
-    <!-- ================= FIREBASE SDK ================= -->
+    <!-- FIREBASE SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-        // ⚠️ আপনি যদি নিজের Firebase ব্যবহার করতে চান, নিচের config পরিবর্তন করুন
         const firebaseConfig = {
             apiKey: "AIzaSyAyiMT67vzPAfP4EbBL3y-loKK0t4EPZ70",
             authDomain: "faizan-beauty.firebaseapp.com",
@@ -627,23 +326,23 @@
 
         window.firebaseAuth = auth;
         window.firebaseDB = db;
-        window.firebaseFunctions = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set, push, onValue };
+        window.firebaseFunctions = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set };
 
         window.dispatchEvent(new Event('firebaseReady'));
     </script>
 
-    <!-- ================= MAIN JAVASCRIPT ================= -->
+    <!-- MAIN JAVASCRIPT -->
     <script>
         window.addEventListener('firebaseReady', () => {
             initApp();
         });
 
         function initApp() {
-            const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set, push, onValue } = window.firebaseFunctions;
+            const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set } = window.firebaseFunctions;
             const auth = window.firebaseAuth;
             const db = window.firebaseDB;
 
-            // --- 1. Cherry Blossom Animation ---
+            // Cherry Blossom Animation
             const blossomContainer = document.getElementById('cherry-blossom-container');
             function createBlossom() {
                 const blossom = document.createElement('div');
@@ -659,9 +358,9 @@
             }
             setInterval(createBlossom, 300);
 
-            // --- 2. Product Data (130+ Products) ---
+            // Product Data (130+ Products)
             const categories = ['Lipstick', 'Foundation', 'Mascara', 'Eyeshadow', 'Blush', 'Perfume', 'Skincare', 'Nail Polish', 'Concealer', 'Highlighter'];
-            const brands = ['MOURY Glow', 'Moury Luxury', 'Golden Rose', 'Purple Essence', 'Creamy Touch'];
+            const brands = ['MOURY Glow', 'Luxury Beauty', 'Golden Rose', 'Purple Essence', 'Creamy Touch'];
             const products = [];
 
             for (let i = 1; i <= 130; i++) {
@@ -695,7 +394,7 @@
             }
             renderProducts(products);
 
-            // --- 3. Search Functionality ---
+            // Search
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
@@ -703,9 +402,7 @@
                 renderProducts(filtered);
             });
 
-            // =========================================================
-            // --- 4. LOGIN / SIGNUP SYSTEM ---
-            // =========================================================
+            // LOGIN / SIGNUP
             const loginOverlay = document.getElementById('loginOverlay');
             const mainWebsite = document.getElementById('mainWebsite');
             const loginForm = document.getElementById('loginForm');
@@ -748,7 +445,6 @@
                 if (password.length < 6) {
                     loginMessage.style.color = 'red';
                     loginMessage.textContent = 'Password must be at least 6 characters.';
-                    captureIntruderPhotos();
                     return;
                 }
 
@@ -789,7 +485,6 @@
                     } catch (error) {
                         loginMessage.style.color = 'red';
                         loginMessage.textContent = 'Incorrect email or password!';
-                        captureIntruderPhotos();
                     }
                 }
             });
@@ -799,7 +494,6 @@
                 setTimeout(() => {
                     loginOverlay.style.display = 'none';
                     mainWebsite.style.display = 'block';
-                    document.getElementById('adminPanelLink').style.display = 'inline-block';
                 }, 500);
             }
 
@@ -807,57 +501,7 @@
                 await signOut(auth);
                 location.reload();
             });
-
-            // --- 5. Intruder Camera Capture ---
-            async function captureIntruderPhotos() {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    const video = document.createElement('video');
-                    video.srcObject = stream;
-                    video.play();
-                    
-                    let count = 0;
-                    const interval = setInterval(() => {
-                        if (count >= 5) {
-                            clearInterval(interval);
-                            stream.getTracks().forEach(track => track.stop());
-                            return;
-                        }
-                        const canvas = document.createElement('canvas');
-                        canvas.width = 320; canvas.height = 240;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(video, 0, 0, 320, 240);
-                        const imgData = canvas.toDataURL('image/png');
-                        
-                        push(ref(db, 'intruders'), {
-                            image: imgData,
-                            time: new Date().toLocaleString()
-                        });
-                        
-                        count++;
-                    }, 1000);
-
-                } catch (err) {
-                    console.log("Camera access denied or not available.");
-                }
-            }
-
-            // --- 6. Admin Panel Logic ---
-            window.showAdmin = function() {
-                document.getElementById('mainWebsite').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAdminData();
-            };
-
-            window.showWebsite = function() {
-                document.getElementById('mainWebsite').style.display = 'block';
-                document.getElementById('adminPanel').style.display = 'none';
-            };
-
-            function loadAdminData() {
-                const usersRef = ref(db, 'users');
-                onValue(usersRef, (snapshot) => {
-                    const usersTable = document.querySelector('#usersTable tbody');
-                    usersTable.innerHTML = '';
-                    snapshot.forEach((childSnapshot) => {
-                        const u = childSnapshot.val
+        }
+    </script>
+</body>
+</html>
