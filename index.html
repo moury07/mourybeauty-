@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAIZAN Beauty Product</title>
+    
+    <!-- ✅ ব্রাউজার ট্যাব আইকন (Favicon) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* ================= CSS ================= */
+        :root {
+            --black: #0a0a0a;
+            --gold: #d4af37;
+            --cream: #f5f0e6;
+            --deep-purple: #3b0b3b;
+            --text-light: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Cherry Blossom Animation */
+        #cherry-blossom-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .cherry-blossom {
+            position: absolute;
+            background: radial-gradient(circle, #ffb7c5, #ff69b4);
+            border-radius: 50% 0 50% 0;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(50px); }
+        }
+
+        /* Corner Lights */
+        .corner-light {
+            position: fixed;
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+            z-index: 1;
+            animation: pulse 4s infinite alternate;
+        }
+        .top-left { top: -50px; left: -50px; }
+        .top-right { top: -50px; right: -50px; }
+        .bottom-left { bottom: -50px; left: -50px; }
+        .bottom-right { bottom: -50px; right: -50px; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0.8; }
+        }
+
+        /* ====== LOGIN SCREEN ====== */
+        #loginOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .login-box {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+            animation: float 4s ease-in-out infinite;
+        }
+        .login-box h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .login-box h1 span { color: var(--deep-purple); }
+        .login-box p.subtitle {
+            color: #aaa;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .login-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .login-box button:hover {
+            background: #b8960c;
+            box-shadow: 0 0 20px var(--gold);
+        }
+        .toggle-link {
+            margin-top: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .toggle-link span {
+            color: var(--gold);
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        #loginMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        /* ====== MAIN WEBSITE ====== */
+        #mainWebsite {
+            display: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 2px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+        }
+        .logo span { color: var(--deep-purple); text-shadow: 0 0 5px var(--deep-purple); }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--gold);
+            border-radius: 25px;
+            padding: 5px 15px;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+            padding: 5px;
+        }
+        .search-bar i { color: var(--gold); }
+
+        .auth-buttons { display: flex; gap: 10px; }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-gold:hover { background: #b8960c; box-shadow: 0 0 15px var(--gold); }
+
+        .btn-purple {
+            background: var(--deep-purple);
+            color: white;
+            border: 1px solid var(--gold);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-purple:hover { background: #5a1a5a; box-shadow: 0 0 15px var(--deep-purple); }
+
+        /* Hero Section */
+        .hero {
+            padding: 50px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero-image-wrapper {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(110%);
+        }
+        .hero-image-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, transparent 50%, rgba(59, 11, 59, 0.8));
+        }
+        .hero-text { max-width: 500px; }
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, var(--gold), var(--cream), var(--deep-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientMove 3s infinite alternate;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .hero-text p { font-size: 1.1rem; margin-bottom: 20px; color: #ccc; }
+        .developer-credit {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        #developerName {
+            animation: colorChange 2s infinite alternate;
+        }
+        @keyframes colorChange {
+            0% { color: var(--gold); }
+            100% { color: var(--deep-purple); text-shadow: 0 0 10px var(--deep-purple); }
+        }
+
+        .contact-links { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .contact-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .fb { background: #1877f2; }
+        .wa { background: #25d366; }
+        .li { background: #0077b5; }
+        .contact-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+
+        /* Products Section */
+        .products-section {
+            padding: 50px 5%;
+            position: relative;
+            z-index: 2;
+        }
+        .products-section h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 { font-size: 1rem; color: var(--cream); margin-bottom: 5px; }
+        .product-card .price { color: var(--gold); font-weight: bold; font-size: 1.2rem; }
+        .product-card .buy-btn {
+            margin-top: 10px;
+            background: var(--deep-purple);
+            color: white;
+            border: 1px solid var(--gold);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .product-card .buy-btn:hover { background: var(--gold); color: black; }
+
+        /* Admin Panel */
+        .admin-container { padding: 50px 5%; display: none; position: relative; z-index: 2; }
+        .admin-box { background: rgba(255,255,255,0.05); border: 1px solid var(--gold); padding: 20px; border-radius: 15px; margin-bottom: 30px; }
+        .admin-box h2 { color: var(--gold); margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; color: white; }
+        th, td { padding: 12px; border-bottom: 1px solid #444; text-align: left; }
+        th { background: var(--deep-purple); color: var(--gold); }
+        .intruder-img { width: 100px; height: 75px; object-fit: cover; border: 2px solid red; border-radius: 5px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { flex-direction: column; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+            .hero-content { flex-direction: column; text-align: center; }
+            .hero-image-wrapper { width: 280px; height: 350px; }
+            .hero-text h1 { font-size: 2rem; }
+            .contact-links { justify-content: center; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .login-box { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cherry Blossom Animation -->
+    <div id="cherry-blossom-container"></div>
+    <div class="corner-light top-left"></div>
+    <div class="corner-light top-right"></div>
+    <div class="corner-light bottom-left"></div>
+    <div class="corner-light bottom-right"></div>
+
+    <!-- ================= LOGIN OVERLAY ================= -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h1>FAIZAN <span>Beauty</span></h1>
+            <p class="subtitle">Please sign in to access the store</p>
+            <form id="loginForm">
+                <input type="text" id="loginName" placeholder="Full Name (only for Sign Up)" style="display: none;">
+                <input type="email" id="loginEmail" placeholder="Gmail Address" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit" id="loginSubmitBtn">Sign In</button>
+            </form>
+            <p id="loginMessage"></p>
+            <div class="toggle-link">
+                <span id="toggleAuthMode">Don't have an account? Sign Up</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN WEBSITE ================= -->
+    <div id="mainWebsite">
+        <header>
+            <div class="logo">FAIZAN <span>Beauty</span></div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="auth-buttons">
+                <button id="logoutBtn" class="btn-gold">Logout</button>
+                <button id="adminPanelLink" class="btn-purple" onclick="showAdmin()">Admin Panel</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-image-wrapper">
+                    <!-- ✅ আপনার ছবি এখানে (ফাইলের নাম: faizan.jpg) -->
+                    <img src="faizan.jpg" alt="Faizan" class="hero-img">
+                    <div class="hero-image-overlay"></div>
+                </div>
+                <div class="hero-text">
+                    <h1>Welcome to <br><span class="gradient-text">FAIZAN Beauty Product</span></h1>
+                    <p>Premium Cosmetics for the Modern You.</p>
+                    <p class="developer-credit">Developer by <span id="developerName">FAIZAN</span></p>
+                    <div class="contact-links">
+                        <a href="https://www.facebook.com/Faizanislam.999" target="_blank" class="contact-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="https://wa.me/8801646313289" target="_blank" class="contact-btn wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://www.linkedin.com/in/md-faizan-islam-729280395/" target="_blank" class="contact-btn li"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section">
+            <h2>Our Collection</h2>
+            <div class="product-grid" id="productGrid"></div>
+        </section>
+    </div>
+
+    <!-- ================= ADMIN PANEL ================= -->
+    <div id="adminPanel" class="admin-container">
+        <button class="btn-gold" onclick="showWebsite()" style="margin-bottom: 20px;">← Back to Website</button>
+        <h1 style="color: var(--gold); margin-bottom: 30px;">Admin Dashboard</h1>
+        
+        <div class="admin-box">
+            <h2>Registered Users (Signups)</h2>
+            <table id="usersTable">
+                <thead>
+                    <tr><th>Name</th><th>Email</th><th>Password</th><th>Time</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="admin-box">
+            <h2>Intruder Captures (Wrong Password)</h2>
+            <div id="intruderGallery" style="display: flex; gap: 15px; flex-wrap: wrap;"></div>
+        </div>
+    </div>
+
+    <!-- ================= FIREBASE SDK ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyiMT67vzPAfP4EbBL3y-loKK0t4EPZ70",
+            authDomain: "faizan-beauty.firebaseapp.com",
+            databaseURL: "https://faizan-beauty-default-rtdb.firebaseio.com",
+            projectId: "faizan-beauty",
+            storageBucket: "faizan-beauty.firebasestorage.app",
+            messagingSenderId: "782657407856",
+            appId: "1:782657407856:web:cd2f70ed50d506188d5db5",
+            measurementId: "G-3RZBPTBPXE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        window.firebaseAuth = auth;
+        window.firebaseDB = db;
+        window.firebaseFunctions = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set, push, onValue };
+
+        window.dispatchEvent(new Event('firebaseReady'));
+    </script>
+
+    <!-- ================= MAIN JAVASCRIPT ================= -->
+    <script>
+        window.addEventListener('firebaseReady', () => {
+            initApp();
+        });
+
+        function initApp() {
+            const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, ref, set, push, onValue } = window.firebaseFunctions;
+            const auth = window.firebaseAuth;
+            const db = window.firebaseDB;
+
+            // --- 1. Cherry Blossom Animation ---
+            const blossomContainer = document.getElementById('cherry-blossom-container');
+            function createBlossom() {
+                const blossom = document.createElement('div');
+                blossom.classList.add('cherry-blossom');
+                const size = Math.random() * 15 + 5;
+                blossom.style.width = size + 'px';
+                blossom.style.height = size + 'px';
+                blossom.style.left = Math.random() * 100 + 'vw';
+                blossom.style.animationDuration = Math.random() * 5 + 5 + 's';
+                blossom.style.animationDelay = Math.random() * 5 + 's';
+                blossomContainer.appendChild(blossom);
+                setTimeout(() => { blossom.remove(); }, 10000);
+            }
+            setInterval(createBlossom, 300);
+
+            // --- 2. Product Data (130+ Products) ---
+            const categories = ['Lipstick', 'Foundation', 'Mascara', 'Eyeshadow', 'Blush', 'Perfume', 'Skincare', 'Nail Polish', 'Concealer', 'Highlighter'];
+            const brands = ['FAIZAN Glow', 'Luxury Beauty', 'Golden Rose', 'Purple Essence', 'Creamy Touch'];
+            const products = [];
+
+            for (let i = 1; i <= 130; i++) {
+                const cat = categories[Math.floor(Math.random() * categories.length)];
+                const brand = brands[Math.floor(Math.random() * brands.length)];
+                const price = (Math.random() * 50 + 10).toFixed(2);
+                const imgUrl = `https://picsum.photos/seed/beauty${i}/300/300`;
+                
+                products.push({
+                    id: i,
+                    name: `${brand} ${cat} ${i}`,
+                    price: `$${price}`,
+                    image: imgUrl
+                });
+            }
+
+            const productGrid = document.getElementById('productGrid');
+            function renderProducts(productList) {
+                productGrid.innerHTML = '';
+                productList.forEach(p => {
+                    const card = document.createElement('div');
+                    card.classList.add('product-card');
+                    card.innerHTML = `
+                        <img src="${p.image}" alt="${p.name}" loading="lazy">
+                        <h3>${p.name}</h3>
+                        <p class="price">${p.price}</p>
+                        <button class="buy-btn">Add to Cart</button>
+                    `;
+                    productGrid.appendChild(card);
+                });
+            }
+            renderProducts(products);
+
+            // --- 3. Search Functionality ---
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+                renderProducts(filtered);
+            });
+
+            // =========================================================
+            // --- 4. LOGIN / SIGNUP SYSTEM ---
+            // =========================================================
+            const loginOverlay = document.getElementById('loginOverlay');
+            const mainWebsite = document.getElementById('mainWebsite');
+            const loginForm = document.getElementById('loginForm');
+            const loginMessage = document.getElementById('loginMessage');
+            const loginName = document.getElementById('loginName');
+            const loginEmail = document.getElementById('loginEmail');
+            const loginPassword = document.getElementById('loginPassword');
+            const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+            const toggleAuthMode = document.getElementById('toggleAuthMode');
+
+            let isSignupMode = false;
+
+            toggleAuthMode.addEventListener('click', () => {
+                isSignupMode = !isSignupMode;
+                if (isSignupMode) {
+                    loginName.style.display = 'block';
+                    loginSubmitBtn.textContent = 'Sign Up';
+                    toggleAuthMode.textContent = 'Already have an account? Sign In';
+                    loginMessage.textContent = '';
+                } else {
+                    loginName.style.display = 'none';
+                    loginSubmitBtn.textContent = 'Sign In';
+                    toggleAuthMode.textContent = "Don't have an account? Sign Up";
+                    loginMessage.textContent = '';
+                }
+            });
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = loginName.value.trim();
+                const email = loginEmail.value.trim();
+                const password = loginPassword.value.trim();
+
+                if (!email.endsWith('@gmail.com')) {
+                    loginMessage.style.color = 'red';
+                    loginMessage.textContent = 'Please use a valid Gmail address.';
+                    return;
+                }
+
+                if (password.length < 6) {
+                    loginMessage.style.color = 'red';
+                    loginMessage.textContent = 'Password must be at least 6 characters.';
+                    captureIntruderPhotos();
+                    return;
+                }
+
+                if (isSignupMode) {
+                    if (name === '') {
+                        loginMessage.style.color = 'red';
+                        loginMessage.textContent = 'Please enter your full name.';
+                        return;
+                    }
+
+                    try {
+                        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                        const user = userCredential.user;
+
+                        await set(ref(db, 'users/' + user.uid), {
+                            name: name,
+                            email: email,
+                            password: password,
+                            timestamp: new Date().toLocaleString()
+                        });
+
+                        loginMessage.style.color = 'lightgreen';
+                        loginMessage.textContent = 'Account created successfully!';
+                        setTimeout(() => { loginSuccess(); }, 1000);
+
+                    } catch (error) {
+                        loginMessage.style.color = 'red';
+                        loginMessage.textContent = error.message;
+                    }
+
+                } else {
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        loginMessage.style.color = 'lightgreen';
+                        loginMessage.textContent = 'Login successful!';
+                        setTimeout(() => { loginSuccess(); }, 800);
+
+                    } catch (error) {
+                        loginMessage.style.color = 'red';
+                        loginMessage.textContent = 'Incorrect email or password!';
+                        captureIntruderPhotos();
+                    }
+                }
+            });
+
+            function loginSuccess() {
+                loginOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loginOverlay.style.display = 'none';
+                    mainWebsite.style.display = 'block';
+                    document.getElementById('adminPanelLink').style.display = 'inline-block';
+                }, 500);
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await signOut(auth);
+                location.reload();
+            });
+
+            // --- 5. Intruder Camera Capture ---
+            async function captureIntruderPhotos() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    const video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.play();
+                    
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        if (count >= 5) {
+                            clearInterval(interval);
+                            stream.getTracks().forEach(track => track.stop());
+                            return;
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 320; canvas.height = 240;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, 320, 240);
+                        const imgData = canvas.toDataURL('image/png');
+                        
+                        push(ref(db, 'intruders'), {
+                            image: imgData,
+                            time: new Date().toLocaleString()
+                        });
+                        
+                        count++;
+                    }, 1000);
+
+                } catch (err) {
+                    console.log("Camera access denied or not available.");
+                }
+            }
+
+            // --- 6. Admin Panel Logic ---
+            window.showAdmin = function() {
+                document.getElementById('mainWebsite').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadAdminData();
+            };
+
+            window.showWebsite = function() {
+                document.getElementById('mainWebsite').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'none';
+            };
+
+            function loadAdminData() {
+                const usersRef = ref(db, 'users');
+                onValue(usersRef, (snapshot) => {
+                    const usersTable = document.querySelector('#usersTable tbody');
+                    usersTable.innerHTML = '';
+                    snapshot.forEach((childSnapshot) => {
+                        const u = childSnapshot.val();
+                        const row = `<tr><td>${u.name || 'N/A'}</td><td>${u.email}</td><td>${u.password}</td><td>${u.timestamp}</td></tr>`;
+                        usersTable.innerHTML += row;
+                    });
+                });
+
+                const intrudersRef = ref(db, 'intruders');
+                onValue(intrudersRef, (snapshot) => {
+                    const gallery = document.getElementById('intruderGallery');
+                    gallery.innerHTML = '';
+                    snapshot.forEach((childSnapshot) => {
+                        const i = childSnapshot.val();
+                        const img = document.createElement('img');
+                        img.src = i.image;
+                        img.className = 'intruder-img';
+                        img.title = i.time;
+                        gallery.appendChild(img);
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
